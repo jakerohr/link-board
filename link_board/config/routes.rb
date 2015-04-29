@@ -5,8 +5,12 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root 'site#index'
+
   get 'about' => 'site#about'
   get 'secret_page' => 'site#secret'
+
+  get 'signup' => 'users#new'
+  post 'signup' => 'users#create'
 
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
@@ -14,6 +18,8 @@ Rails.application.routes.draw do
 
   # Test logout via url (for development)
   get 'logout' => 'sessions#destroy'
+
+  resources :posts, :only => [:index, :new, :create, :edit, :update, :destroy]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -6,7 +6,6 @@
     <%= render "layouts/flash" %>
 
     <%= bootstrap_form_for :user do |f| %>
-      <%= f.text_field :name, placeholder: "Enter your name", icon: "user" %>
       <%= f.text_field :email, placeholder: "Enter your email", icon: "user" %>
       <%= f.password_field :password, placeholder: "Enter your password", icon: "lock" %>
       <%= f.submit "Login", class: "btn btn-primary" %>

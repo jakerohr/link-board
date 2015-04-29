@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-       @user = User.authenticate(params[:user][:name], params[:user][:email], params[:user][:password])
+       @user = User.authenticate(params[:user][:email], params[:user][:password])
 
     if @user
       session[:user_id] = @user.id
@@ -21,7 +21,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-
+    session[:user_id] = nil
+    flash[:info] = "User has logged out"
+    redirect_to login_path
   end
 
   # private
