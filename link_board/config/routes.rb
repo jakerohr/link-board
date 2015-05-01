@@ -12,14 +12,27 @@ Rails.application.routes.draw do
   get 'signup' => 'users#new'
   post 'signup' => 'users#create'
 
+  resources :users do
+    resources :votes, :only => [:create]
+    resources :comments
+  end
+
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
+
+
   # Test logout via url (for development)
   get 'logout' => 'sessions#destroy'
 
-  resources :posts, :only => [:index, :new, :create, :edit, :update, :destroy]
+  resources :sessions
+  resources :posts, :only => [:index, :new, :create, :edit, :update, :destroy] do
+    resources :votes, :only => [:create]
+    resources :comments do
+      resources :votes
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -28,7 +41,7 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-    resources :sessions
+
 
   # Example resource route with options:
   #   resources :products do

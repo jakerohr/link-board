@@ -3,8 +3,13 @@ class PostsController < ApplicationController
   before_action :is_authenticated?
 
   def index
-    # @posts = Post.all
     @posts = current_user.posts
+    @vote = Vote.new
+    respond_to do |format|
+      format.json{render json:@posts}
+      format.xml{render xml:@posts}
+      format.html
+    end
   end
 
   def new
@@ -14,7 +19,13 @@ class PostsController < ApplicationController
   def create
     # @post = Post.create(post_params)
     @post = current_user.posts.create(post_params)
-    redirect_to posts_path
+    if @post.save
+      flash[:success] = "New Post Created"
+      redirect_to root_path
+    else
+      flash[:danger] = "Post Failed"
+      render :new
+    end
   end
 
   def edit

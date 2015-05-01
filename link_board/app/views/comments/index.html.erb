@@ -1,36 +1,38 @@
+<h2><%= link_to @post.title, @post.link %></h2>
 
 <%= render "layouts/flash" %>
 
-<h2>Link Board Homepage</h2>
+<%= bootstrap_form_for [@post, @comment] do |f| %>
+      <%= f.text_field :body, placeholder: "Enter comment", icon: "pencil" %>
+      <%= f.submit "Create Comment", class: "btn btn-primary" %>
+    <% end %>
+
+<h4>Comments</h4>
+
 <div class="table-responsive">
   <table class="table table-condensed">
-    <% @posts.each do |p| %>
+  <% @comments.each do |c| %>
     <tr>
-      <td><%= link_to p.title, p.link %></td>
-      <td><%=  @users.find_by_id(p.user_id).name%></td>
+      <td><%= c.body %></td>
+      <td><%=  @users.find_by_id(c.user_id).name%></td>
           <td>
             <div class="btn-group">
-              <%= bootstrap_form_for [p, @vote] do |f|%>
+              <%= bootstrap_form_for [@post, c, @vote] do |f|%>
               <%= f.hidden_field :value, value: "1" %>
               <%= f.button "", class: "btn btn-primary btn-xs glyphicon glyphicon-thumbs-up" %>
               <% end %>
 
-              <%= bootstrap_form_for [p, @vote] do |f|%>
+              <%= bootstrap_form_for [@post, c, @vote] do |f|%>
               <%= f.hidden_field :value, value: "-1" %>
               <%= f.button "", class: "btn btn-primary btn-xs glyphicon glyphicon-thumbs-down" %>
               <% end %>
             </div>
           </td>
         <td>
-          <%= p.votes.reduce(0){ |sum, v| sum + v.value } %>
-        </td>
-        <td>
-          <%= link_to "Comments (#{p.comments.length})", post_comments_path(p) %>
+          <%= c.votes.reduce(0){ |sum, v| sum + v.value } %>
         </td>
 
         <% end %>
     </tr>
   </table>
 </div>
-
-

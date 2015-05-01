@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       flash[:success] = "User logged in!!"
       redirect_to root_path
     else
-      flash[:error] = "Credentials Invalid!!"
+      flash[:danger] = "Credentials Invalid!!"
       render :new
     end
   end
