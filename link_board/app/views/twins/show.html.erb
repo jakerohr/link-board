@@ -1,0 +1,28 @@
+<h1><%= @twin.name %></h1>
+
+<p>
+  <strong>Position:</strong>
+  <%= @twin.position %>
+</p>
+<p>
+  <strong>Number:</strong>
+  <%= @twin.number %>
+</p>
+<p>
+  <strong>Bio:</strong>
+  <%= @twin.bio %>
+</p>
+<p><strong>Tags:</strong></p>
+<% @tags.each do |t| %>
+<ul>
+ <li><%= link_to t.name, t %></li>
+</ul>
+<% end %>
+
+<%= bootstrap_form_for @tag do |f| %>
+  <%= f.text_field :name, :placeholder => "Enter a new tag" %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to 'Edit Player', edit_twin_path(@twin) %> |
+<%= link_to 'Full Roster', twins_path %>

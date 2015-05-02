@@ -1,39 +1,25 @@
 Rails.application.routes.draw do
+  # get 'tags' => 'tags#index'
+
+  # get 'tags/new'
+
+  # get 'tags/:id' => 'tags#show'
+
+  # post 'tags' => 'tags#create'
+
+  # delete 'tags/:id' => 'tags#destroy'
+
+
+
+  # get 'twins/index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-  root 'site#index'
-
-  get 'about' => 'site#about'
-  get 'secret_page' => 'site#secret'
-
-  get 'signup' => 'users#new'
-  post 'signup' => 'users#create'
-
-  resources :users do
-    resources :votes, :only => [:create]
-    resources :comments
-  end
-
-  get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  delete 'logout' => 'sessions#destroy'
-
-
-
-  # Test logout via url (for development)
-  get 'logout' => 'sessions#destroy'
-
-  resources :sessions
-  resources :posts, :only => [:index, :new, :create, :edit, :update, :destroy] do
-    resources :votes, :only => [:create]
-    resources :comments do
-      resources :votes
-    end
-  end
-
+  root 'twins#index'
+  resources :tags#, :except => [:destroy, :show, :create]
+  resources :twins
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -41,7 +27,7 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-
+  #   resources :products
 
   # Example resource route with options:
   #   resources :products do
